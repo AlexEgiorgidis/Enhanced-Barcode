@@ -76,7 +76,7 @@ report 63000 "Create Barcode On Mass"
                 VariantCount := DataItem10014501.Count;
                 if GuiAllowed then begin
                     Window.Open('Item              @1@@@@@@@@@@@@@@@@@@@@@\' +
-                                            'Item Variant      #2#####################');
+                                'Item Variant      #2#####################');
                 end;
             end;
         }

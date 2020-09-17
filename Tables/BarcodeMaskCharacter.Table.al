@@ -24,11 +24,11 @@ table 63002 "Barcode Mask Character"
                 if not (Character in ['A' .. 'Z']) then
                     Error(Text002);
                 BarcMaskChar.SetCurrentKey(Character);
+                BarcMaskChar.reset;
                 BarcMaskChar.SetFilter("Character Type", '<>%1', "Character Type");
                 BarcMaskChar.SetRange(Character, Character);
-                if BarcMaskChar.Find('-') then
-                    Error(Text003,
-                                FieldCaption(Character), Character, FieldCaption("Character Type"), Format(BarcMaskChar."Character Type"));
+                if BarcMaskChar.FindFirst() then
+                    Error(Text003, FieldCaption(Character), Character, FieldCaption("Character Type"), Format(BarcMaskChar."Character Type"));
             end;
         }
         field(3; Comment; Text[50])
@@ -47,10 +47,6 @@ table 63002 "Barcode Mask Character"
         key(Key2; Character)
         {
         }
-    }
-
-    fieldgroups
-    {
     }
 
     var

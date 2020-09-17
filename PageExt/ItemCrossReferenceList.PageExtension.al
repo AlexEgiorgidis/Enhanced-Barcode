@@ -2,11 +2,12 @@ pageextension 63001 "Item Cross Reference" extends "Item Cross Reference Entries
 {
     layout
     {
-        addafter("Discontinue Bar Code")
+        addlast(Control1)
         {
             field("Internal Barcode"; "Internal Barcode")
             {
-                ApplicationArea = all;
+                ApplicationArea = Basic, Suite;
+                Caption = 'Internal Barcde';
             }
         }
     }

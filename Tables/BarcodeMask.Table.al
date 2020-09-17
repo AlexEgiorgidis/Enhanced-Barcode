@@ -5,8 +5,8 @@ table 63000 "Barcode Mask"
     DataClassification = CustomerContent;
     Caption = 'Barcode Mask';
     DataCaptionFields = Description;
-    DrillDownPageId = 63002;
-    LookupPageId = 63002;
+    DrillDownPageId = "Barcode Mask List";
+    LookupPageId = "Barcode Mask List";
 
     fields
     {
@@ -25,6 +25,7 @@ table 63000 "Barcode Mask"
                 BarcMask: Record "Barcode Mask";
             begin
                 if (Mask <> '') and (Mask <> xRec.Mask) then begin
+                    BarcMask.reset;
                     BarcMask.SetCurrentKey(Mask);
                     BarcMask.SetRange(Mask, Mask);
                     BarcMask.SetFilter("Entry No.", '<>%1', "Entry No.");
@@ -50,11 +51,11 @@ table 63000 "Barcode Mask"
         }
         field(20; Length; Decimal)
         {
+            FieldClass = FlowField;
             CalcFormula = sum ("Barcode Mask Segment".Length where("Mask Entry No." = field("Entry No.")));
             Caption = 'Length';
             DecimalPlaces = 0 : 0;
             Editable = false;
-            FieldClass = FlowField;
         }
         field(25; Prefix; Text[22])
         {
@@ -83,8 +84,8 @@ table 63000 "Barcode Mask"
         {
             DataClassification = CustomerContent;
             Caption = 'Symbology';
-            OptionCaption = 'EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C';
-            OptionMembers = EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C;
+            OptionCaption = 'EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C,ISBN,ISSN';
+            OptionMembers = EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C,ISBN,ISSN;
         }
         field(35; "Number Series"; Code[20])
         {
@@ -131,7 +132,7 @@ table 63000 "Barcode Mask"
     end;
 
     var
-        tmpMask: Record "Barcode Mask";
+        tmpMask: Record "Barcode Mask" temporary; //is it????
         Segm: Record "Barcode Mask Segment";
         BarcodeMaskChar: Record "Barcode Mask Character";
         Text000: Label 'Barcode mask:';

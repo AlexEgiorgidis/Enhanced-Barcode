@@ -63,10 +63,6 @@ table 63001 "Barcode Mask Segment"
         }
     }
 
-    fieldgroups
-    {
-    }
-
     trigger OnInsert()
     begin
         MaskChar.Get(Type);

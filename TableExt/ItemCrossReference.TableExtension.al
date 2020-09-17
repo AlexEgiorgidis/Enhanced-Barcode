@@ -7,19 +7,6 @@ tableextension 63001 "Item Cross Reference" extends "Item Cross Reference"
         {
             Caption = 'Internal Barcode';
             DataClassification = CustomerContent;
-            Description = 'MER1.0';
-
-            trigger OnValidate()
-            Begin
-            End;
         }
-    }
-
-    keys
-    {
-    }
-
-    fieldgroups
-    {
     }
 }

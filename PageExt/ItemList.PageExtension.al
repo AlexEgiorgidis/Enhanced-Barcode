@@ -6,7 +6,7 @@ pageextension 63002 "Item List" extends "Item List"
         {
             action("Barcode Masks")
             {
-                ApplicationArea = all;
+                ApplicationArea = Basic, Suite;
                 Image = BarCode;
                 RunObject = page "Barcode Mask Setup";
             }

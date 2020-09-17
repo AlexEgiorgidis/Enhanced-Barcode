@@ -2,11 +2,12 @@ pageextension 63000 "Item Card" extends "Item Card"
 {
     layout
     {
-        addafter("Item Category Code")
+        addlast(Item)
         {
             field("Barcode Mask"; "Barcode Mask")
             {
-                ApplicationArea = all;
+                ApplicationArea = Basic, Suite;
+                Caption = 'Barcode Mask';
             }
         }
     }
@@ -16,7 +17,8 @@ pageextension 63000 "Item Card" extends "Item Card"
         {
             action("Create Barcodes")
             {
-                ApplicationArea = All;
+                ApplicationArea = Basic, Suite;
+                Caption = 'Create Barcodes';
                 image = BarCode;
 
                 trigger OnAction()

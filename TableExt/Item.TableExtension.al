@@ -7,7 +7,6 @@ tableextension 63000 Item extends Item
         {
             Caption = 'Barcode Mask';
             DataClassification = CustomerContent;
-            Description = 'MER1.0';
 
             trigger OnValidate()
             var
@@ -26,13 +25,5 @@ tableextension 63000 Item extends Item
                     VALIDATE("Barcode Mask", BarcodeMask.Mask);
             end;
         }
-    }
-
-    keys
-    {
-    }
-
-    fieldgroups
-    {
     }
 }
