@@ -84,8 +84,9 @@ table 63000 "Barcode Mask"
         {
             DataClassification = CustomerContent;
             Caption = 'Symbology';
-            OptionCaption = 'EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C,ISBN,ISSN';
-            OptionMembers = EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C,ISBN,ISSN;
+            OptionCaption = 'EAN13,,UPCA,UPCE,,,,,,,,ISBN,ISSN';
+            OptionMembers = EAN13,,UPCA,UPCE,,,,,,,,ISBN,ISSN;
+            //OptionMembers = EAN13,EAN8,UPCA,UPCE,CODE39,CODE128,PDF417,MAXICODE,CODE128_A,CODE128_B,CODE128_C,ISBN,ISSN;
         }
         field(35; "Number Series"; Code[20])
         {
@@ -221,8 +222,8 @@ table 63000 "Barcode Mask"
         case Symbology of
             Symbology::EAN13:
                 exit(13);
-            Symbology::EAN8:
-                exit(8);
+            //Symbology::EAN8:
+            //    exit(8);
             Symbology::UPCA:
                 exit(12);
             Symbology::UPCE:

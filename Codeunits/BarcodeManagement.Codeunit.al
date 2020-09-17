@@ -2,52 +2,6 @@ codeunit 63000 "Barcode Management"
 {
     // version MER1.0
 
-    trigger OnRun()
-    begin
-    end;
-
-    var
-        BarcMask: Record "Barcode Mask";
-        BarcMaskChar: Record "Barcode Mask Character";
-        BarcodeType: Text[30];
-        Cchar: Text[1];
-        Ichar: Text[1];
-        Lchar: Text[1];
-        Mchar: Text[1];
-        NSchar: Text[1];
-        Schar: Text[1];
-        Tchar: Text[1];
-        VChar: Text[1];
-        Xchar: Text[1];
-        Inum: Integer;
-        Ipos: Integer;
-        Mpos: Integer;
-        NSnum: Integer;
-        NSPos: Integer;
-        BarcodeMask: Boolean;
-        BarEan: Boolean;
-        DoNotAskForConfirmation: Boolean;
-        EANBarcode: Boolean;
-        RetailVariants: Boolean;
-        Text004: Label 'Length of the barcode is greater than the length of the %1.';
-        Text005: Label 'The Item No. is only %1 digits long according to the %2.\';
-        Text006: Label 'Enter just the Item No. or the full barcode with or without the check digit.';
-        Text007: Label 'Enter just the Item No. or the full barcode';
-        Text012: Label 'Character %1 in the %2 is invalid.';
-        Text015: Label 'Character number %1 must be %2.';
-        Text020: Label 'Incorrect barcode type.';
-        Text021: Label 'The length of barcode is not correct.';
-        Text022: Label 'The barcode is not correct. Check Digit should be %1.';
-        Text036: Label 'Length of a standard EAN barcode mask must be 13.';
-        Text042: Label 'Item No. must be continuous in the mask.';
-        Text043: Label 'The mask is not a standard 13 digit EAN mask, it cannot have a check digit.';
-        Text044: Label 'Modulus Check Digit must be digit no. %1 in the mask.';
-        Text045: Label 'Character %1 is not registered in the %2 table.';
-        Text046: Label 'Character number %1 in the mask must be a modulus check digit - %2.';
-        Text048: Label 'Not all %2s are represented by a %1 in the %3 table.';
-        Text061: Label 'Number Series must be continuous in the mask.';
-        Text062: Label 'Use number series masks to construct barcodes.';
-
     procedure CheckBarcode(var BarcodeNo: Code[22]; var Item: Record Item)
     var
         MaskSegment: Record "Barcode Mask Segment";
@@ -76,7 +30,7 @@ codeunit 63000 "Barcode Management"
                     case StrLen(BarcodeNo) of
                         6:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
-                                BarcodeType := '1'                                  // UPC-E code(1)
+                                BarcodeType := '1'                                    // UPC-E code(1)
                             else
                                 if CopyStr(BarcodeNo, 1, 1) = '2' then
                                     BarcodeType := '2'                                // price in barode (2)
@@ -84,7 +38,7 @@ codeunit 63000 "Barcode Management"
                                     BarcodeType := '98';                              // error (98)
                         7:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
-                                BarcodeType := '1'                                  // UPC-E code(1)
+                                BarcodeType := '1'                                    // UPC-E code(1)
                             else
                                 if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
                                     BarcodeType := '3'                                // ean 8 code (3)
@@ -95,36 +49,36 @@ codeunit 63000 "Barcode Management"
                                 BarcodeType := '1'
                             else
                                 if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
-                                    BarcodeType := '3'                                  // ean 8 code(3)
+                                    BarcodeType := '3'                                 // ean 8 code(3)
                                 else
-                                    BarcodeType := '98';                                // error (98)
+                                    BarcodeType := '98';                               // error (98)
                         11:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
-                                BarcodeType := '4'                                 // UPC-A code(4)
+                                BarcodeType := '4'                                     // UPC-A code(4)
                             else
-                                BarcodeType := '98';                               // error (98)
+                                BarcodeType := '98';                                   // error (98)
                         12:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
-                                BarcodeType := '4'                                 // UPC-A Code(4)
+                                BarcodeType := '4'                                     // UPC-A Code(4)
                             else
                                 if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
-                                    BarcodeType := '5'                               // ean 13 (5)
+                                    BarcodeType := '5'                                 // ean 13 (5)
                                 else
-                                    BarcodeType := '98';                             // error (98)
+                                    BarcodeType := '98';                               // error (98)
                         13:
                             if (Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30) or (Code2Int(CopyStr(BarcodeNo, 1, 2)) <= 13) then
-                                BarcodeType := '5'                                 // ean 13 code(5)
+                                BarcodeType := '5'                                     // ean 13 code(5)
                             else
                                 if CopyStr(BarcodeNo, 1, 1) = '2' then
-                                    BarcodeType := '2'                               // price in barode (2)
+                                    BarcodeType := '2'                                 // price in barode (2)
                                 else
-                                    BarcodeType := '98';                             // error (98)
+                                    BarcodeType := '98';                               // error (98)
                         1 .. 5, 9, 10, 14 .. 22:
-                            BarcodeType := '99';                                 // error (99)
+                            BarcodeType := '99';                                       // error (99)
                     end;
 
                 if CopyStr(BarcodeNo, 1, 2) = '20' then
-                    if (StrLen(BarcodeNo) = 12) or (StrLen(BarcodeNo) = 13) then   // instorecode
+                    if (StrLen(BarcodeNo) = 12) or (StrLen(BarcodeNo) = 13) then       // instorecode
                         BarcodeType := '5'
                     else
                         BarcodeType := '99';
@@ -465,10 +419,10 @@ codeunit 63000 "Barcode Management"
             else
                 NewBarcode := pMask.Prefix + NewBarcode;
             DoNotAskForConfirmation := true;
-            if pMask.Symbology in [pMask.Symbology::EAN13, pMask.Symbology::EAN8] then
-                EANBarcode := true
-            else
-                EANBarcode := false;
+            //if pMask.Symbology in [pMask.Symbology::EAN13, pMask.Symbology::EAN8] then
+            //    EANBarcode := true
+            //else
+            //    EANBarcode := false;
             CheckBarcode(NewBarcode, pItem);
             if (StrLen(NewBarcode) < StrLen(pMask.Mask)) and (CopyStr(pMask.Mask, StrLen(pMask.Mask), 1) = CheckDigitCharacter) and EANBarcode
             then begin
@@ -630,5 +584,49 @@ codeunit 63000 "Barcode Management"
 
         exit(BarcodeType_l);
     end;
+
+
+    var
+        BarcMask: Record "Barcode Mask";
+        BarcMaskChar: Record "Barcode Mask Character";
+        BarcodeType: Text[30];
+        Cchar: Text[1];
+        Ichar: Text[1];
+        Lchar: Text[1];
+        Mchar: Text[1];
+        NSchar: Text[1];
+        Schar: Text[1];
+        Tchar: Text[1];
+        VChar: Text[1];
+        Xchar: Text[1];
+        Inum: Integer;
+        Ipos: Integer;
+        Mpos: Integer;
+        NSnum: Integer;
+        NSPos: Integer;
+        BarcodeMask: Boolean;
+        BarEan: Boolean;
+        DoNotAskForConfirmation: Boolean;
+        EANBarcode: Boolean;
+        RetailVariants: Boolean;
+        Text004: Label 'Length of the barcode is greater than the length of the %1.';
+        Text005: Label 'The Item No. is only %1 digits long according to the %2.\';
+        Text006: Label 'Enter just the Item No. or the full barcode with or without the check digit.';
+        Text007: Label 'Enter just the Item No. or the full barcode';
+        Text012: Label 'Character %1 in the %2 is invalid.';
+        Text015: Label 'Character number %1 must be %2.';
+        Text020: Label 'Incorrect barcode type.';
+        Text021: Label 'The length of barcode is not correct.';
+        Text022: Label 'The barcode is not correct. Check Digit should be %1.';
+        Text036: Label 'Length of a standard EAN barcode mask must be 13.';
+        Text042: Label 'Item No. must be continuous in the mask.';
+        Text043: Label 'The mask is not a standard 13 digit EAN mask, it cannot have a check digit.';
+        Text044: Label 'Modulus Check Digit must be digit no. %1 in the mask.';
+        Text045: Label 'Character %1 is not registered in the %2 table.';
+        Text046: Label 'Character number %1 in the mask must be a modulus check digit - %2.';
+        Text048: Label 'Not all %2s are represented by a %1 in the %3 table.';
+        Text061: Label 'Number Series must be continuous in the mask.';
+        Text062: Label 'Use number series masks to construct barcodes.';
+
 }
 
