@@ -2,13 +2,16 @@ pageextension 63002 "Item List" extends "Item List"
 {
     actions
     {
-        addafter("Line Discounts")
+        addlast(navigation)
         {
-            action("Barcode Masks")
+            group("Barcode Mask")
             {
-                ApplicationArea = Basic, Suite;
-                Image = BarCode;
-                RunObject = page "Barcode Mask Setup";
+                action("Barcode Masks")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Image = BarCode;
+                    RunObject = page "Barcode Mask Setup";
+                }
             }
         }
     }
