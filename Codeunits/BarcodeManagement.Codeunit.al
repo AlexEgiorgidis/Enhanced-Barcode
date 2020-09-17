@@ -39,18 +39,18 @@ codeunit 63000 "Barcode Management"
                         7:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
                                 BarcodeType := '1'                                    // UPC-E code(1)
+                                                                                      //else
+                                                                                      //    if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
+                                                                                      //        BarcodeType := '3'                                // ean 8 code (3)
                             else
-                                if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
-                                    BarcodeType := '3'                                // ean 8 code (3)
-                                else
-                                    BarcodeType := '98';                              // error (98)
+                                BarcodeType := '98';                              // error (98)
                         8:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
                                 BarcodeType := '1'
                             else
-                                if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
-                                    BarcodeType := '3'                                 // ean 8 code(3)
-                                else
+                                //if Code2Int(CopyStr(BarcodeNo, 1, 2)) >= 30 then
+                                //    BarcodeType := '3'                                 // ean 8 code(3)
+                                //else
                                     BarcodeType := '98';                               // error (98)
                         11:
                             if CopyStr(BarcodeNo, 1, 1) = '0' then
@@ -419,10 +419,12 @@ codeunit 63000 "Barcode Management"
             else
                 NewBarcode := pMask.Prefix + NewBarcode;
             DoNotAskForConfirmation := true;
+            //Removed due to customization for Eaglemoss - REMOVE
             //if pMask.Symbology in [pMask.Symbology::EAN13, pMask.Symbology::EAN8] then
             //    EANBarcode := true
             //else
             //    EANBarcode := false;
+            //Removed due to customization for Eaglemoss - REMOVE
             CheckBarcode(NewBarcode, pItem);
             if (StrLen(NewBarcode) < StrLen(pMask.Mask)) and (CopyStr(pMask.Mask, StrLen(pMask.Mask), 1) = CheckDigitCharacter) and EANBarcode
             then begin
