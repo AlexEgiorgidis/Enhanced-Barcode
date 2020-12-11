@@ -24,10 +24,14 @@ pageextension 63000 "Item Card" extends "Item Card"
                 trigger OnAction()
                 var
                     Item: Record Item;
+                    CreateBarcodeonMassReport: report "Create Barcode On Mass";
                 begin
                     Item := Rec;
                     Item.SETRECFILTER;
-                    REPORT.RUN(REPORT::"Create Barcode On Mass", TRUE, FALSE, Item);
+                    Clear(CreateBarcodeonMassReport);
+                    CreateBarcodeonMassReport.SetBarcodeMask(item."Barcode Mask");
+                    CreateBarcodeonMassReport.run();
+                    //REPORT.RUN(REPORT::"Create Barcode On Mass", TRUE, FALSE, Item);
                 end;
             }
         }
