@@ -1,16 +1,16 @@
 pageextension 63000 "Item Card" extends "Item Card"
 {
-    layout
-    {
-        addlast(Item)
-        {
-            field("Barcode Mask"; "Barcode Mask")
-            {
-                ApplicationArea = Basic, Suite;
-                Caption = 'Barcode Mask';
-            }
-        }
-    }
+    // layout
+    // {
+    //     addlast(Item)
+    //     {
+    //         field("Barcode Mask"; "Barcode Mask")
+    //         {
+    //             ApplicationArea = Basic, Suite;
+    //             Caption = 'Barcode Mask';
+    //         }
+    //     }
+    // }
     actions
     {
         addafter("&Create Stockkeeping Unit")
